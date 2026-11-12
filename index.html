@@ -12,11 +12,12 @@
 <div class="wrap">
   <header>
     <h1>O ciclo da tuberculose bovina</h1>
-    <p>Como a <i>Mycobacterium bovis</i> entra no rebanho, se instala no bovino, sai dele e chega ao ser humano.</p>
+    <p>Como a <i>Mycobacterium bovis</i> entra no rebanho, se instala no bovino, sai dele e chega ao ser humano — em 1 minuto.</p>
   </header>
 
   <div class="player">
-    <div class="stagebox" id="stagebox">
+    <div class="stagewrap" id="stagewrap">
+    <div class="stagebox">
       <svg id="stage" viewBox="0 0 960 540" role="img" aria-label="Animação do ciclo de transmissão da tuberculose bovina">
         <defs>
           <g id="bac">
@@ -212,25 +213,29 @@
         </g>
       </svg>
 
-      <div class="caption" id="cap" aria-live="polite"></div>
-
       <button class="poster" id="poster" type="button">
         <span class="ring" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7z"/></svg>
         </span>
         <span id="posterLbl">Assistir (1 minuto)</span>
       </button>
+      <button class="fsexit" id="fsExit" type="button" hidden>✕ Sair da tela cheia</button>
+    </div>
+      <div class="caption" id="cap" aria-live="polite"></div>
     </div>
 
     <div class="controls">
       <button class="ctl" id="btnPlay" type="button">Reproduzir</button>
       <button class="ctl sec" id="btnRestart" type="button">Recomeçar</button>
+      <button class="ctl sec" id="btnFs" type="button">Tela cheia</button>
       <span class="time" id="timeLbl">0:00 / 1:00</span>
       <input type="range" id="seek" min="0" max="60000" step="50" value="0" aria-label="Posição na animação">
     </div>
 
     <div class="chapters" id="chapters" role="group" aria-label="Capítulos"></div>
   </div>
+
+  <p class="foot">Animação educativa sobre a transmissão da <i>Mycobacterium bovis</i>. Não substitui orientação veterinária ou médica.</p>
 </div>
 
 <script src="js/script.js"></script>

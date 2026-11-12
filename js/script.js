@@ -278,10 +278,47 @@
   seek.addEventListener("input", ()=>{ poster.hidden = true; seekTo(Number(seek.value)); });
   document.addEventListener("keydown", e=>{
     if(e.target === seek) return;
+    if(e.code === "Escape" && fakeFs){ exitFs(); }
     if(e.code === "Space"){ e.preventDefault(); playing ? pause() : play(); }
     if(e.code === "ArrowRight"){ seekTo((Number(ref.currentTime)||0) + 5000); }
     if(e.code === "ArrowLeft"){ seekTo((Number(ref.currentTime)||0) - 5000); }
   });
+
+  // ------- tela cheia -------
+  const wrapEl = $("stagewrap"), btnFs = $("btnFs"), fsExit = $("fsExit");
+  let fakeFs = false;
+  function setFsUI(on){
+    wrapEl.classList.toggle("fs", on);
+    fsExit.hidden = !on;
+    btnFs.textContent = on ? "Sair da tela cheia" : "Tela cheia";
+    document.body.style.overflow = on ? "hidden" : "";
+  }
+  function enterFs(){
+    const req = wrapEl.requestFullscreen || wrapEl.webkitRequestFullscreen;
+    if(req){
+      try{
+        const p = req.call(wrapEl);
+        if(p && p.catch) p.catch(()=>{ fakeFs = true; setFsUI(true); });
+        return;
+      }catch(err){}
+    }
+    fakeFs = true; setFsUI(true);
+  }
+  function exitFs(){
+    if(document.fullscreenElement || document.webkitFullscreenElement){
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else { fakeFs = false; setFsUI(false); }
+  }
+  ["fullscreenchange","webkitfullscreenchange"].forEach(ev=>{
+    document.addEventListener(ev, ()=>{
+      const native = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      if(!native) fakeFs = false;
+      setFsUI(native || fakeFs);
+    });
+  });
+  btnFs.addEventListener("click", ()=> wrapEl.classList.contains("fs") ? exitFs() : enterFs());
+  fsExit.addEventListener("click", exitFs);
+  $("stage").addEventListener("click", ()=>{ if(poster.hidden) (playing ? pause() : play()); });
 
   seekTo(0);
   updateUI(0);

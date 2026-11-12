@@ -43,6 +43,7 @@ header i{ font-style:italic; }
   border:1px solid var(--frame-br); border-radius:16px;
   padding:12px; 
 }
+.stagewrap{ position:relative; }
 .stagebox{ position:relative; border-radius:10px; overflow:hidden; background:#CFE8F2; }
 .stagebox svg{ display:block; width:100%; height:auto; }
 svg text{ font-family:inherit; }
@@ -72,6 +73,43 @@ svg text{ font-family:inherit; }
 .poster .ring svg{ width:34px; height:34px; }
 .poster span{ font-size:17px; font-weight:700; text-shadow:0 1px 6px rgba(0,0,0,.45); }
 .poster[hidden]{ display:none; }
+
+@media (max-width:640px){
+  .caption{
+    position:static; left:auto; bottom:auto; transform:none;
+    max-width:none; background:transparent; color:var(--ink);
+    padding:10px 2px 0; border-radius:0; min-height:4em;
+    font-size:15px; text-align:left;
+  }
+}
+
+.fsexit{
+  position:absolute; top:10px; right:10px; z-index:5;
+  font:inherit; font-size:14px; font-weight:700;
+  background:rgba(14,24,18,.72); color:#FFFFFF;
+  border:0; border-radius:8px; padding:8px 13px; cursor:pointer;
+}
+.fsexit[hidden]{ display:none; }
+.fsexit:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
+
+.stagewrap.fs{
+  position:fixed; inset:0; z-index:60; background:#0B130E;
+  display:flex; align-items:center; justify-content:center;
+}
+.stagewrap.fs .stagebox{
+  width:min(100vw, 177vh);
+  width:min(100vw, 177svh);
+  border-radius:0;
+}
+.stagewrap.fs .caption{
+  position:absolute; left:50%; right:auto;
+  bottom:max(16px, env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%);
+  max-width:88%; min-height:0; text-align:center;
+  background:rgba(14,24,18,.80); color:#FFFFFF;
+  padding:7px 14px; border-radius:9px;
+  font-size:clamp(14px,2.4vmin,20px);
+}
 .poster:focus-visible{ outline:3px solid #fff; outline-offset:-6px; }
 
 .controls{
